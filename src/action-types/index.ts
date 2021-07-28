@@ -1,3 +1,5 @@
+import RecipeType from '../models/Recipe';
+
 export enum ActionType {
   ADD_RECIPE_START = 'ADD_RECIPE_START',
   ADD_RECIPE_SUCCESS = 'ADD_RECIPE_SUCCESS',
@@ -15,8 +17,6 @@ export enum ActionType {
   DELETE_RECIPE_SUCCESS = 'DELETE_RECIPE_SUCCESS',
   DELETE_RECIPE_FAILURE = 'DELETE_RECIPE_FAILURE',
 }
-
-import RecipeType from '../models/Recipe';
 
 interface GetAllRecipesStartAction {
   type: ActionType.GET_ALL_RECIPES_START;
@@ -46,10 +46,25 @@ interface GetRecipeFailureAction {
   payload: string;
 }
 
+interface AddRecipeStartAction {
+  type: ActionType.ADD_RECIPE_START;
+}
+
+interface AddRecipeSuccessAction {
+  type: ActionType.ADD_RECIPE_SUCCESS;
+}
+
+interface AddRecipeFailureAction {
+  type: ActionType.ADD_RECIPE_FAILURE;
+}
+
 export type RecipeActions =
   | GetAllRecipesStartAction
   | GetAllRecipesSuccessAction
   | GetAllRecipesFailureAction
   | GetRecipeStartAction
   | GetRecipeSuccessAction
-  | GetRecipeFailureAction;
+  | GetRecipeFailureAction
+  | AddRecipeStartAction
+  | AddRecipeSuccessAction
+  | AddRecipeFailureAction;

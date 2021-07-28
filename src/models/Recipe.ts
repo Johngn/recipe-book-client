@@ -1,18 +1,22 @@
+export interface IngredientType {
+  name: string;
+  amount: number;
+  unit: string;
+}
+
+export interface InstructionType {
+  text: string;
+  image: string;
+}
+
 export interface RecipeType {
   title: string;
   category: string;
   time: string;
   image: string;
   difficulty: number;
-  ingredients: {
-    name: string;
-    amount: number;
-    unit: string;
-  }[];
-  instructions: {
-    text: string;
-    image: string;
-  }[];
+  ingredients: IngredientType[];
+  instructions: InstructionType[];
   _id?: string;
 }
 
@@ -22,15 +26,8 @@ class Recipe {
   time: string;
   image: string;
   difficulty: number;
-  ingredients: {
-    name: string;
-    amount: number;
-    unit: string;
-  }[];
-  instructions: {
-    text: string;
-    image: string;
-  }[];
+  ingredients: IngredientType[];
+  instructions: InstructionType[];
   _id?: string;
 
   constructor(recipe: RecipeType) {

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { listRecipes } from '../hooks/API';
-import Recipe, { RecipeType } from '../models/Recipe';
+import { useEffect } from 'react';
 import styled from 'styled-components';
+
+import { useActions } from '../hooks/useActions';
+import { useTypedSelector } from '../hooks/useTypedSelector';
 
 import RecipeListItem from './RecipeListItem';
 
@@ -11,23 +12,27 @@ const RecipeContainer = styled.div`
 `;
 
 const Recipes: React.FC = () => {
-  const [recipes, setRecipes] = useState<RecipeType[]>([]);
+  const loading = useTypedSelector(state => state.recipes.loading);
+  const recipeList = useTypedSelector(state => state.recipes.recipeList);
+
+  const { getAllRecipes } = useActions();
 
   useEffect(() => {
-    (async () => {
-      const recipes = await listRecipes();
-      setRecipes(recipes.data);
-    })();
+    getAllRecipes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
       This is the list of recipes
-      <RecipeContainer>
-        {recipes.map(recipe => (
-          <RecipeListItem key={recipe._id} title={recipe.title} />
-        ))}
-      </RecipeContainer>
+      {loading && <h1>Loading</h1>}
+      {!loading && (
+        <RecipeContainer>
+          {recipeList.map(recipe => (
+            <RecipeListItem key={recipe._id} title={recipe.title} />
+          ))}
+        </RecipeContainer>
+      )}
     </>
   );
 };
